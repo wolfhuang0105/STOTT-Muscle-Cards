@@ -23,7 +23,7 @@
       "origin": "枕骨外隆突，上項線內1/4，項韌帶",
       "insertion": "至鎖骨1/3",
       "image_label": "",
-      "img": "images/image1.jpeg"
+      "img": "image1.jpeg"
     },
     {
       "id": "2",
@@ -34,7 +34,7 @@
       "origin": "第六頸椎-第三胸椎的棘突和韌帶",
       "insertion": "肩頰骨尖峰和肩頰棘的上部",
       "image_label": "",
-      "img": "images/image2.jpeg",
+      "img": "image2.jpeg",
       "note": "校註:英文應為 Middle Trapezius(原文 Middel 為拼字錯誤);止點「肩頰骨尖峰和肩頰棘」應為「肩胛骨肩峰和肩胛棘」。"
     },
     {
@@ -46,7 +46,7 @@
       "origin": "4-12胸椎的棘突和韌帶",
       "insertion": "肩胛棘的內側端",
       "image_label": "",
-      "img": "images/image3.jpeg"
+      "img": "image3.jpeg"
     },
     {
       "id": "4",
@@ -57,7 +57,7 @@
       "origin": "第1-4頸椎橫突後結節",
       "insertion": "肩頰骨內側上角",
       "image_label": "",
-      "img": "images/image4.jpeg",
+      "img": "image4.jpeg",
       "note": "校註:止點「肩頰骨」應為「肩胛骨」(頰/胛 用字錯誤)。"
     },
     {
@@ -69,7 +69,7 @@
       "origin": "第2-第5胸椎的棘突",
       "insertion": "介於肩胛棘與肩夾下角之間的肩頰骨內側緣",
       "image_label": "",
-      "img": "images/image5.jpeg",
+      "img": "image5.jpeg",
       "note": "校註:止點原文中「肩夾下角」「肩頰骨」皆為錯字,應作「肩胛下角」「肩胛骨」。"
     },
     {
@@ -81,7 +81,7 @@
       "origin": "第7脊椎-第1胸椎的棘突",
       "insertion": "肩胛棘以上的內側緣上部",
       "image_label": "",
-      "img": "images/image6.jpeg",
+      "img": "image6.jpeg",
       "note": "校註:起點「第7脊椎」應為「第7頸椎(C7)」。"
     },
     {
@@ -93,7 +93,7 @@
       "origin": "1-8或9肋骨的側面",
       "insertion": "肩胛骨上和下角的內側緣",
       "image_label": "",
-      "img": "images/image7.jpeg"
+      "img": "image7.jpeg"
     },
     {
       "id": "8",
@@ -104,7 +104,7 @@
       "origin": "第2-5 或3-5肋骨前面",
       "insertion": "肩胛骨喙突",
       "image_label": "",
-      "img": "images/image8.jpeg"
+      "img": "image8.jpeg"
     },
     {
       "id": "9",
@@ -115,7 +115,7 @@
       "origin": "第一肋骨與肋軟骨結合處",
       "insertion": "鎖骨肩峰端",
       "image_label": "",
-      "img": "images/image9.jpeg"
+      "img": "image9.jpeg"
     },
     {
       "id": "10",
@@ -126,7 +126,7 @@
       "origin": "鎖骨外1/3處",
       "insertion": "肱骨三角肌粗隆",
       "image_label": "",
-      "img": "images/image10.jpeg",
+      "img": "image10.jpeg",
       "note": "校註:前三角肌主作用為肩屈曲;中三角肌才是主要外展。"
     },
     {
@@ -138,7 +138,7 @@
       "origin": "肩峰外側緣",
       "insertion": "肱骨三角肌粗隆",
       "image_label": "",
-      "img": "images/image11.jpeg",
+      "img": "image11.jpeg",
       "note": "校註:中三角肌負責肩關節主要外展;0–15° 由棘上肌啟動,15° 之後由中三角接手。"
     },
     {
@@ -150,7 +150,7 @@
       "origin": "肩胛棘下緣",
       "insertion": "肱骨三角肌粗隆",
       "image_label": "",
-      "img": "images/image12.jpeg",
+      "img": "image12.jpeg",
       "note": "校註:後三角肌主作用為肩伸展與水平外展;原文「abd」並非主作用,僅微小協助。"
     },
     {
@@ -162,7 +162,7 @@
       "origin": "胸骨，第1-6對肋軟骨及腹直肌鞘",
       "insertion": "肱骨大結節嵴",
       "image_label": "",
-      "img": "images/image13.jpeg"
+      "img": "image13.jpeg"
     },
     {
       "id": "14",
@@ -173,7 +173,7 @@
       "origin": "鎖骨內側約1/2至2/3的前表面",
       "insertion": "肱骨大結節嵴",
       "image_label": "",
-      "img": "images/image14.jpeg"
+      "img": "image14.jpeg"
     },
     {
       "id": "15",
@@ -184,7 +184,7 @@
       "origin": "肩胛骨喙突",
       "insertion": "肱骨中部內側緣（與三角肌粗隆相對應）",
       "image_label": "",
-      "img": "images/image15.jpeg"
+      "img": "image15.jpeg"
     },
     {
       "id": "16",
@@ -195,7 +195,7 @@
       "origin": "肩胛下角、最後六節胸椎、最後三或四根肋骨、胸腰筋膜、後髂嵴",
       "insertion": "肱骨結節間溝",
       "image_label": "",
-      "img": "images/image16.jpeg"
+      "img": "image16.jpeg"
     },
     {
       "id": "17",
@@ -206,7 +206,7 @@
       "origin": "肩胛骨下角和肩胛骨外側緣下方1/3處",
       "insertion": "肱骨小節節嵴",
       "image_label": "",
-      "img": "images/image17.jpeg",
+      "img": "image17.jpeg",
       "note": "校註:止點「肱骨小節節嵴」原文重字,應為「肱骨小結節嵴」(crest of lesser tubercle of humerus),與胸大肌、闊背肌共同形成「Lady between two majors」結構。"
     },
     {
@@ -218,7 +218,7 @@
       "origin": "肩胛骨外側緣上部2/3處",
       "insertion": "肱骨大結節",
       "image_label": "Rotator cuff muscle旋轉套",
-      "img": "images/image18.jpeg"
+      "img": "image18.jpeg"
     },
     {
       "id": "19",
@@ -229,7 +229,7 @@
       "origin": "肩胛骨的棘下窩",
       "insertion": "肱骨的大結節",
       "image_label": "Rotator cuff muscle旋轉套",
-      "img": "images/image19.jpeg",
+      "img": "image19.jpeg",
       "note": "校註:棘下肌主作用為外旋;原文「內收」為錯誤,棘下肌不做內收。屬旋轉肌袖之一。"
     },
     {
@@ -241,7 +241,7 @@
       "origin": "肩胛骨的棘下窩",
       "insertion": "肱骨的大結節",
       "image_label": "Rotator cuff muscle旋轉套",
-      "img": "images/image20.jpeg",
+      "img": "image20.jpeg",
       "note": "校註:棘上肌起點為「棘上窩」,原文「棘下窩」為錯誤;主作用為啟動外展 0–15°,並穩定盂肱關節,屬旋轉肌袖(Rotator cuff)四肌之一。"
     },
     {
@@ -253,7 +253,7 @@
       "origin": "肩胛下窩",
       "insertion": "肱骨小結節",
       "image_label": "Rotator cuff muscle旋轉套",
-      "img": "images/image21.jpeg"
+      "img": "image21.jpeg"
     },
     {
       "id": "22",
@@ -264,7 +264,7 @@
       "origin": "長頭：肩胛骨盂下結節，外側頭：肱骨後側表面近端一半處，內側頭：肱骨後側表面遠端一半處",
       "insertion": "尺骨的鷹嘴突",
       "image_label": "",
-      "img": "images/image22.jpeg"
+      "img": "image22.jpeg"
     },
     {
       "id": "23",
@@ -275,7 +275,7 @@
       "origin": "短頭：肩胛骨的喙狀突，長頭：肩胛骨的盂上結節",
       "insertion": "橈骨側隆、肱二頭肌腱膜",
       "image_label": "",
-      "img": "images/image23.jpeg",
+      "img": "image23.jpeg",
       "note": "校註:止點「橈骨側隆」應為「橈骨粗隆 radial tuberosity」。"
     },
     {
@@ -287,7 +287,7 @@
       "origin": "肱骨外上髁",
       "insertion": "鷹嘴突和尺骨後面近端表面",
       "image_label": "",
-      "img": "images/image24.jpeg",
+      "img": "image24.jpeg",
       "note": "校註:肘肌主作用為肘伸展(協助肱三頭肌);第二作用為穩定尺骨,非主動旋前(原文 pronation 表達不準確)。"
     },
     {
@@ -299,7 +299,7 @@
       "origin": "肱骨外側髁上嵴近端2/3處",
       "insertion": "橈骨莖突",
       "image_label": "",
-      "img": "images/image25.jpeg",
+      "img": "image25.jpeg",
       "note": "校註:肱橈肌在「半旋前位」flexion 最有力;旋轉作用為「回中位」,並非主動 pronation 或 supination。"
     },
     {
@@ -311,7 +311,7 @@
       "origin": "肱骨前側面下半部",
       "insertion": "尺骨粗隆和冠突",
       "image_label": "",
-      "img": "images/image26.jpeg"
+      "img": "image26.jpeg"
     },
     {
       "id": "27",
@@ -322,7 +322,7 @@
       "origin": "肱骨外上髁、橈側副韌帶、尺骨環狀韌帶、尺骨琁後肌嵴",
       "insertion": "橈骨骨幹近端1/3前外側面",
       "image_label": "",
-      "img": "images/image27.jpeg",
+      "img": "image27.jpeg",
       "note": "校註:起點「尺骨琁後肌嵴」中「琁」為錯字,應為「旋」(尺骨旋後肌嵴)。"
     },
     {
@@ -334,7 +334,7 @@
       "origin": "來自肱骨內上髁的屈肌總腱，以及尺骨冠突",
       "insertion": "橈骨外側面中段",
       "image_label": "",
-      "img": "images/image28.jpeg",
+      "img": "image28.jpeg",
       "note": "校註:旋前圓肌主作用為前臂旋前,並輔助肘屈曲。"
     },
     {
@@ -346,7 +346,7 @@
       "origin": "第五頸椎到第三胸椎的椎體、第三頸椎到第五頸椎的橫突",
       "insertion": "寰椎前椎弓結節、樞椎椎體、第三與第四頸椎、第五與第六頸椎的橫突",
       "image_label": "",
-      "img": "images/image29.jpeg"
+      "img": "image29.jpeg"
     },
     {
       "id": "30",
@@ -357,7 +357,7 @@
       "origin": "第三頸椎到第六頸椎的橫突",
       "insertion": "枕骨下表面",
       "image_label": "",
-      "img": "images/image30.jpeg"
+      "img": "image30.jpeg"
     },
     {
       "id": "31",
@@ -368,7 +368,7 @@
       "origin": "寰椎後結節",
       "insertion": "枕骨底下面，枕骨大孔前面",
       "image_label": "",
-      "img": "images/image31.jpeg"
+      "img": "image31.jpeg"
     },
     {
       "id": "32",
@@ -379,7 +379,7 @@
       "origin": "寰椎橫突",
       "insertion": "枕骨外側部",
       "image_label": "",
-      "img": "images/image32.jpeg"
+      "img": "image32.jpeg"
     },
     {
       "id": "33",
@@ -390,7 +390,7 @@
       "origin": "樞椎（第二頸椎）棘突",
       "insertion": "枕骨下項線的外側部分",
       "image_label": "",
-      "img": "images/image33.jpeg"
+      "img": "image33.jpeg"
     },
     {
       "id": "34",
@@ -401,7 +401,7 @@
       "origin": "寰椎（第一頸椎）後弓結節",
       "insertion": "枕骨下項線的內側部分",
       "image_label": "",
-      "img": "images/image34.jpeg"
+      "img": "image34.jpeg"
     },
     {
       "id": "35",
@@ -412,7 +412,7 @@
       "origin": "寰椎橫突",
       "insertion": "枕骨下項線上方的骨面",
       "image_label": "",
-      "img": "images/image35.jpeg",
+      "img": "image35.jpeg",
       "note": "校註:正規拉丁名應為 Obliquus Capitis Superior(單數陽性);舊書常見 Obliques 為非標準拼法。屬於枕下肌群,組成枕下三角。"
     },
     {
@@ -424,7 +424,7 @@
       "origin": "第二頸椎（樞椎 C2）的棘突",
       "insertion": "第一頸椎（寰椎 C1）的橫突",
       "image_label": "",
-      "img": "images/image36.jpeg",
+      "img": "image36.jpeg",
       "note": "校註:正規拉丁名 Obliquus Capitis Inferior;此肌唯一不附著於枕骨的枕下肌,主要作用為轉動 C1 寰椎,連帶頭部轉向同側。"
     },
     {
@@ -436,7 +436,7 @@
       "origin": "上一節椎骨橫突",
       "insertion": "下一節椎骨橫突 起點與止點皆 位於相鄰兩節 椎骨的橫突",
       "image_label": "",
-      "img": "images/image37.jpeg"
+      "img": "image37.jpeg"
     },
     {
       "id": "38",
@@ -447,7 +447,7 @@
       "origin": "頸椎部分：跨越在第二頸椎到第三胸椎棘突間",
       "insertion": "腰椎部分：跨越在第十二胸椎到第五腰椎棘突間",
       "image_label": "",
-      "img": "images/image38.jpeg"
+      "img": "image38.jpeg"
     },
     {
       "id": "39",
@@ -458,7 +458,7 @@
       "origin": "椎體的橫突",
       "insertion": "向上跨越一個椎體後，止於棘突的基底部 起點與止點：旋轉長肌起源於下方脊椎的橫突，向上跨越兩節脊椎，附著於上方脊椎的棘突基部",
       "image_label": "",
-      "img": "images/image39.jpeg"
+      "img": "image39.jpeg"
     },
     {
       "id": "40",
@@ -469,7 +469,7 @@
       "origin": "胸椎（T2-T12）的橫突後上部",
       "insertion": "向上跨越一個椎骨，連接到上方相鄰椎骨的椎板下緣及其棘突根部",
       "image_label": "",
-      "img": "images/image40.jpeg"
+      "img": "image40.jpeg"
     },
     {
       "id": "41",
@@ -480,7 +480,7 @@
       "origin": "骶骨表面，腰椎乳狀突，胸椎橫突、和第4-7頸椎關節突",
       "insertion": "第2頸椎以下全部椎骨棘突",
       "image_label": "",
-      "img": "images/image41.jpeg",
+      "img": "image41.jpeg",
       "note": "校註:多裂肌單側收縮為「對側旋轉」(rotation to opposite side),原文「rotation 側邊」易誤讀為同側,實為對側。為脊椎節段性穩定的主要深層肌之一。"
     },
     {
@@ -492,7 +492,7 @@
       "origin": "T6-T12 (胸椎) 橫突",
       "insertion": "C6 (頸椎)-T4",
       "image_label": "",
-      "img": "images/image42.jpeg",
+      "img": "image42.jpeg",
       "note": "校註:止點寫法應補上「棘突」 — C6 (頸椎) – T4 棘突。"
     },
     {
@@ -504,7 +504,7 @@
       "origin": "T1-T6 (胸椎) 橫突",
       "insertion": "C2-C7 (頸椎)的棘突",
       "image_label": "",
-      "img": "images/image43.jpeg",
+      "img": "image43.jpeg",
       "note": "校註:半棘肌單邊收縮為「對側旋轉」,與多裂肌動作模式一致;止點以 C2 棘突(樞椎)為主。"
     },
     {
@@ -516,7 +516,7 @@
       "origin": "T1-T6 (胸椎) 橫突，C4-7的關節突",
       "insertion": "枕骨",
       "image_label": "",
-      "img": "images/image44.jpeg",
+      "img": "image44.jpeg",
       "note": "校註:頭半棘肌跨越多節脊椎到枕骨,單邊收縮為對側旋轉、同側側彎;為頸後伸最強的肌肉之一,亦是頸源性頭痛常見受累肌。"
     },
     {
@@ -528,7 +528,7 @@
       "origin": "骶骨後面、髂嵴內唇",
       "insertion": "下6個肋骨角的下緣",
       "image_label": "",
-      "img": "images/image45.jpeg"
+      "img": "image45.jpeg"
     },
     {
       "id": "46",
@@ -539,7 +539,7 @@
       "origin": "下6個肋骨的上緣",
       "insertion": "上6個肋骨角的下緣",
       "image_label": "",
-      "img": "images/image46.jpeg"
+      "img": "image46.jpeg"
     },
     {
       "id": "47",
@@ -550,7 +550,7 @@
       "origin": "上6個肋骨角",
       "insertion": "頸椎（C4-C6）的橫突",
       "image_label": "",
-      "img": "images/image47.jpeg"
+      "img": "image47.jpeg"
     },
     {
       "id": "48",
@@ -561,7 +561,7 @@
       "origin": "骶骨背面、髂嵴後部、腰椎棘突及胸腰筋膜",
       "insertion": "向上延伸並附著於所有12節胸椎的橫突，以及 第2至第12根肋骨 的後部（肋角與橫突之間）",
       "image_label": "",
-      "img": "images/image48.jpeg"
+      "img": "image48.jpeg"
     },
     {
       "id": "49",
@@ -572,7 +572,7 @@
       "origin": "T1-5(6)的橫突",
       "insertion": "C2-6的橫突",
       "image_label": "",
-      "img": "images/image49.jpeg"
+      "img": "image49.jpeg"
     },
     {
       "id": "50",
@@ -583,7 +583,7 @@
       "origin": "中下頸椎的橫突和小關節突、上胸椎的橫突",
       "insertion": "顳骨乳突的後面",
       "image_label": "",
-      "img": "images/image50.jpeg"
+      "img": "image50.jpeg"
     },
     {
       "id": "51",
@@ -594,7 +594,7 @@
       "origin": "骶骨、髂嵴、下胸椎和全部腰椎的棘突",
       "insertion": "T3(4)-8(9)的棘突",
       "image_label": "",
-      "img": "images/image51.jpeg"
+      "img": "image51.jpeg"
     },
     {
       "id": "52",
@@ -605,7 +605,7 @@
       "origin": "項韌帶的下部，以及第七頸椎（C7）或第一、二胸椎（T1、T2）的棘突",
       "insertion": "附著在樞椎（C2）的棘突，有時也會附著在 C3 或 C4 的棘突上",
       "image_label": "",
-      "img": "images/image52.jpeg"
+      "img": "image52.jpeg"
     },
     {
       "id": "53",
@@ -616,7 +616,7 @@
       "origin": "4胸椎-第6胸椎棘突",
       "insertion": "1-3頸椎橫突後結節",
       "image_label": "",
-      "img": "images/image53.jpeg",
+      "img": "image53.jpeg",
       "note": "校註:頸夾肌旋轉「頸」至同側(非頭部);頭夾肌才是旋轉頭至同側。"
     },
     {
@@ -628,7 +628,7 @@
       "origin": "第3頸椎-第3胸椎棘突",
       "insertion": "顳骨乳突、枕骨上項線外1/3",
       "image_label": "",
-      "img": "images/image54.jpeg"
+      "img": "image54.jpeg"
     },
     {
       "id": "55",
@@ -639,7 +639,7 @@
       "origin": "髂骨嵴（骨盆上緣）",
       "insertion": "連接至第 12 對肋骨及第 1 至第 4 腰椎的橫突",
       "image_label": "",
-      "img": "images/image55.jpeg"
+      "img": "image55.jpeg"
     },
     {
       "id": "56",
@@ -650,7 +650,7 @@
       "origin": "3-6頸椎橫突的前結節",
       "insertion": "第一肋骨內上元裡面",
       "image_label": "",
-      "img": "images/image56.jpeg",
+      "img": "image56.jpeg",
       "note": "校註:英文「Aterior」拼字錯,應為「Anterior」;止點「內上元裡面」應為「內上緣裡面」。"
     },
     {
@@ -662,7 +662,7 @@
       "origin": "2-7頸椎橫突後結節或前結節",
       "insertion": "第一肋骨外上緣",
       "image_label": "",
-      "img": "images/image57.jpeg"
+      "img": "image57.jpeg"
     },
     {
       "id": "58",
@@ -673,7 +673,7 @@
       "origin": "後5、6、7頸椎橫突後結節",
       "insertion": "第二肋骨外側緣或第三肋骨",
       "image_label": "",
-      "img": "images/image58.jpeg"
+      "img": "image58.jpeg"
     },
     {
       "id": "59",
@@ -684,7 +684,7 @@
       "origin": "胸骨柄前表面鎖骨頭，鎖骨前表面內1/3",
       "insertion": "乳突外側面和枕骨上項線外側1/2",
       "image_label": "",
-      "img": "images/image59.jpeg"
+      "img": "image59.jpeg"
     },
     {
       "id": "60",
@@ -695,7 +695,7 @@
       "origin": "恥骨上緣",
       "insertion": "胸骨劍突及第5-7肋軟骨前面",
       "image_label": "",
-      "img": "images/image60.jpeg"
+      "img": "image60.jpeg"
     },
     {
       "id": "61",
@@ -706,7 +706,7 @@
       "origin": "髂嵴外側緣前半邊、腹股溝韌帶和腹直肌鞘前層",
       "insertion": "第5-12肋骨外側面",
       "image_label": "",
-      "img": "images/image61.jpeg",
+      "img": "image61.jpeg",
       "note": "校註:英文「Abdomial」拼字錯,應為「Abdominal」;且應為單數「Oblique」。"
     },
     {
@@ -718,7 +718,7 @@
       "origin": "胸腰筋膜，髂嵴和腹股溝韌帶外側",
       "insertion": "第10-12肋骨下緣和白線，其腱膜參與構成腹直肌鞘前、後壁。",
       "image_label": "",
-      "img": "images/image62.jpeg"
+      "img": "image62.jpeg"
     },
     {
       "id": "63",
@@ -729,7 +729,7 @@
       "origin": "胸腰筋膜，髂嵴和腹股溝韌帶外側",
       "insertion": "第10-12肋骨下緣和白線，其腱膜參與構成腹直肌鞘前、後壁。",
       "image_label": "",
-      "img": "images/image63.jpeg"
+      "img": "image63.jpeg"
     },
     {
       "id": "64",
@@ -740,7 +740,7 @@
       "origin": "肋骨端附著處：下六根肋骨內側面；腰部附著處：上兩節或三節腰椎；胸骨附著處：劍突內側",
       "insertion": "中央肌腱",
       "image_label": "",
-      "img": "images/image64.jpeg"
+      "img": "image64.jpeg"
     },
     {
       "id": "65",
@@ -751,7 +751,7 @@
       "origin": "上位肋骨下緣",
       "insertion": "下位肋骨上緣",
       "image_label": "",
-      "img": "images/image65.jpeg"
+      "img": "image65.jpeg"
     },
     {
       "id": "66",
@@ -762,7 +762,7 @@
       "origin": "下位肋骨上緣",
       "insertion": "上位肋骨下緣",
       "image_label": "",
-      "img": "images/image66.jpeg"
+      "img": "image66.jpeg"
     },
     {
       "id": "67",
@@ -773,7 +773,7 @@
       "origin": "肌束較長的下4對肋提肌越過上位肋骨",
       "insertion": "止於下位肋骨",
       "image_label": "",
-      "img": "images/image67.jpeg"
+      "img": "image67.jpeg"
     },
     {
       "id": "68",
@@ -784,7 +784,7 @@
       "origin": "上8對肋提肌",
       "insertion": "止於鄰近肋骨",
       "image_label": "",
-      "img": "images/image68.jpeg"
+      "img": "image68.jpeg"
     },
     {
       "id": "69",
@@ -795,7 +795,7 @@
       "origin": "下兩個頸椎和上兩個胸椎棘突",
       "insertion": "第2-5肋骨角的外方",
       "image_label": "",
-      "img": "images/image69.jpeg"
+      "img": "image69.jpeg"
     },
     {
       "id": "70",
@@ -806,7 +806,7 @@
       "origin": "下三個胸椎後上三個腰椎棘突",
       "insertion": "第9-12肋骨角的外方",
       "image_label": "",
-      "img": "images/image70.jpeg"
+      "img": "image70.jpeg"
     },
     {
       "id": "71",
@@ -817,7 +817,7 @@
       "origin": "第7-12肋骨內側面，胸腰筋膜、髂嵴和腹股溝韌帶",
       "insertion": "劍突、白線，恥骨聯合",
       "image_label": "",
-      "img": "images/image71.jpeg"
+      "img": "image71.jpeg"
     },
     {
       "id": "72",
@@ -828,7 +828,7 @@
       "origin": "腹直肌起點前方恥骨嵴",
       "insertion": "白線較低的部分",
       "image_label": "",
-      "img": "images/image72.jpeg"
+      "img": "image72.jpeg"
     },
     {
       "id": "73",
@@ -839,7 +839,7 @@
       "origin": "腰椎體側面和橫突（第 12 胸椎至第 5 腰椎的側面）",
       "insertion": "股骨小轉子",
       "image_label": "",
-      "img": "images/image73.jpeg",
+      "img": "image73.jpeg",
       "note": "校註:腰大肌主作用為髖屈曲,旋轉作用極微(literature 上 lateral vs medial rotation 仍有爭議);其重要功能為腰椎節段穩定與骨盆–脊椎力學連結。"
     },
     {
@@ -851,7 +851,7 @@
       "origin": "髂窩",
       "insertion": "小轉子",
       "image_label": "",
-      "img": "images/image74.jpeg",
+      "img": "image74.jpeg",
       "note": "校註:Iliopsoas 髂腰肌 = Iliacus(髂肌) + Psoas Major(腰大肌)合稱;原圖實際呈現的是髂肌部分。"
     },
     {
@@ -863,7 +863,7 @@
       "origin": "髂骨後面臀後線，骶骨和尾骨後面，骶結節韌帶",
       "insertion": "股骨臀肌粗隆和闊筋膜髂脛束（3/4）",
       "image_label": "",
-      "img": "images/image75.jpeg",
+      "img": "image75.jpeg",
       "note": "校註:臀大肌纖維分區明確 — 上部協助外展、下部協助內收;經由髂脛束 ITB 對膝外側產生穩定力。"
     },
     {
@@ -875,7 +875,7 @@
       "origin": "髂骨臀前線和臀後線之間",
       "insertion": "股骨大轉子側面",
       "image_label": "",
-      "img": "images/image76.jpeg",
+      "img": "image76.jpeg",
       "note": "校註:臀中肌不可單純說「內旋」 — 其前束內旋、後束外旋;臨床上,Trendelenburg 步態源自臀中肌力弱。"
     },
     {
@@ -887,7 +887,7 @@
       "origin": "髂骨臀前線和臀下線之間",
       "insertion": "股骨大轉子",
       "image_label": "",
-      "img": "images/image77.jpeg",
+      "img": "image77.jpeg",
       "note": "校註:英文「Minimums」拼字錯,應為「Minimus」。"
     },
     {
@@ -899,7 +899,7 @@
       "origin": "骨盆的髂前上棘（ASIS）外側。",
       "insertion": "向下延伸並移行融合於髂脛束的上部",
       "image_label": "",
-      "img": "images/image78.jpeg"
+      "img": "image78.jpeg"
     },
     {
       "id": "79",
@@ -910,7 +910,7 @@
       "origin": "恥骨上支",
       "insertion": "股骨粗線內側唇上部",
       "image_label": "",
-      "img": "images/image79.jpeg"
+      "img": "image79.jpeg"
     },
     {
       "id": "80",
@@ -921,7 +921,7 @@
       "origin": "恥骨下支外面",
       "insertion": "股骨粗線上部",
       "image_label": "",
-      "img": "images/image80.jpeg"
+      "img": "image80.jpeg"
     },
     {
       "id": "81",
@@ -932,7 +932,7 @@
       "origin": "恥骨上支外面",
       "insertion": "股骨粗線內側唇中部",
       "image_label": "",
-      "img": "images/image81.jpeg"
+      "img": "image81.jpeg"
     },
     {
       "id": "82",
@@ -943,7 +943,7 @@
       "origin": "坐骨結節、坐骨支和恥骨下支",
       "insertion": "股骨粗線內側唇上2/3及收肌結節",
       "image_label": "",
-      "img": "images/image82.jpeg"
+      "img": "image82.jpeg"
     },
     {
       "id": "83",
@@ -954,7 +954,7 @@
       "origin": "薦椎前側面",
       "insertion": "大轉子上面",
       "image_label": "",
-      "img": "images/image83.jpeg"
+      "img": "image83.jpeg"
     },
     {
       "id": "84",
@@ -965,7 +965,7 @@
       "origin": "恥骨枝和坐骨枝、閉孔膜",
       "insertion": "股骨轉子窩",
       "image_label": "",
-      "img": "images/image84.jpeg"
+      "img": "image84.jpeg"
     },
     {
       "id": "85",
@@ -976,7 +976,7 @@
       "origin": "閉孔膜和閉孔的下側面",
       "insertion": "大轉子內側面",
       "image_label": "",
-      "img": "images/image85.jpeg"
+      "img": "image85.jpeg"
     },
     {
       "id": "86",
@@ -987,7 +987,7 @@
       "origin": "坐骨棘",
       "insertion": "大轉子內側面",
       "image_label": "",
-      "img": "images/image86.jpeg"
+      "img": "image86.jpeg"
     },
     {
       "id": "87",
@@ -998,7 +998,7 @@
       "origin": "坐骨粗隆",
       "insertion": "大轉子內側面",
       "image_label": "",
-      "img": "images/image87.jpeg"
+      "img": "image87.jpeg"
     },
     {
       "id": "88",
@@ -1009,7 +1009,7 @@
       "origin": "坐骨粗隆外側緣",
       "insertion": "大、小轉子之間的轉子間嵴",
       "image_label": "",
-      "img": "images/image88.jpeg"
+      "img": "image88.jpeg"
     },
     {
       "id": "89",
@@ -1020,7 +1020,7 @@
       "origin": "髂骨前上棘",
       "insertion": "脛骨內側骨幹近端的鵝足肌腱",
       "image_label": "",
-      "img": "images/image89.jpeg"
+      "img": "image89.jpeg"
     },
     {
       "id": "90",
@@ -1031,7 +1031,7 @@
       "origin": "恥骨下支及恥骨體的前表面。",
       "insertion": "脛骨粗隆的內側上端（與縫匠肌、半腱肌共同構成鵝掌肌腱 Pes anserinus）。",
       "image_label": "",
-      "img": "images/image90.jpeg"
+      "img": "image90.jpeg"
     },
     {
       "id": "91",
@@ -1042,7 +1042,7 @@
       "origin": "長頭：坐骨粗隆 短頭：粗線外唇",
       "insertion": "腓骨頭",
       "image_label": "lateral Hamstring",
-      "img": "images/image91.jpeg",
+      "img": "image91.jpeg",
       "note": "校註:股二頭肌髖部動作為伸展+外旋,不做內收(原文「add」為錯誤);短頭僅作用於膝關節。"
     },
     {
@@ -1054,7 +1054,7 @@
       "origin": "坐骨粗隆",
       "insertion": "脛骨近端、內側骨幹的鵝足肌腱",
       "image_label": "Medial Hamstring",
-      "img": "images/image92.jpeg",
+      "img": "image92.jpeg",
       "note": "校註:半腱肌髖部動作為伸展+內旋,不做內收;與股薄肌、縫匠肌共同構成鵝足肌腱 Pes anserinus 止於脛骨內側。"
     },
     {
@@ -1066,7 +1066,7 @@
       "origin": "坐骨粗隆",
       "insertion": "脛骨內髁後側",
       "image_label": "Medial Hamstring",
-      "img": "images/image93.jpeg"
+      "img": "image93.jpeg"
     },
     {
       "id": "94",
@@ -1077,7 +1077,7 @@
       "origin": "髂前下棘和髖臼上緣",
       "insertion": "經髕韌帶至脛骨粗隆",
       "image_label": "",
-      "img": "images/image94.jpeg",
+      "img": "image94.jpeg",
       "note": "校註:原檔英文僅標 Rectus,應為 Rectus Femoris 股直肌;股四頭肌中唯一跨越髖膝雙關節者。"
     },
     {
@@ -1089,7 +1089,7 @@
       "origin": "股骨粗線外側唇和轉子間線",
       "insertion": "四個頭向下形成一個腱，包繞髕骨前面和兩側，向下延為髕韌帶止於脛骨粗隆",
       "image_label": "",
-      "img": "images/image95.jpeg"
+      "img": "image95.jpeg"
     },
     {
       "id": "96",
@@ -1100,7 +1100,7 @@
       "origin": "股骨粗線內側唇和轉子間線",
       "insertion": "四個頭向下形成一個腱，包繞髕骨前面和兩側，向下延為髕韌帶止於脛骨粗隆",
       "image_label": "",
-      "img": "images/image96.jpeg"
+      "img": "image96.jpeg"
     },
     {
       "id": "97",
@@ -1111,7 +1111,7 @@
       "origin": "股骨體前外側面上3/4",
       "insertion": "四個頭向下形成一個腱，包繞髕骨前面和兩側，向下延為熊韌帶止於脛骨粗隆",
       "image_label": "",
-      "img": "images/image97.jpeg"
+      "img": "image97.jpeg"
     },
     {
       "id": "98",
@@ -1122,7 +1122,7 @@
       "origin": "股骨外上髁",
       "insertion": "脛骨比目魚肌線以上的骨面",
       "image_label": "",
-      "img": "images/image98.jpeg"
+      "img": "image98.jpeg"
     },
     {
       "id": "99",
@@ -1133,7 +1133,7 @@
       "origin": "脛骨外髁、脛骨外側面近端和骨間膜",
       "insertion": "內楔狀骨和地一蹠骨基部",
       "image_label": "",
-      "img": "images/image99.jpeg",
+      "img": "image99.jpeg",
       "note": "校註:止點「地一蹠骨」應為「第一蹠骨」。"
     },
     {
@@ -1145,7 +1145,7 @@
       "origin": "脛骨外髁、腓骨前側骨幹近端和骨間膜",
       "insertion": "第2到第5腳趾的中端趾骨和遠端趾骨",
       "image_label": "",
-      "img": "images/image100.jpeg"
+      "img": "image100.jpeg"
     },
     {
       "id": "101",
@@ -1156,7 +1156,7 @@
       "origin": "腓骨前側面中間和骨間膜",
       "insertion": "腳姆指的遠端趾骨",
       "image_label": "",
-      "img": "images/image101.jpeg",
+      "img": "image101.jpeg",
       "note": "校註:中文「伸姆長肌、腳姆指」中「姆」為錯字,應為「拇」;且「指」應為「趾」(腳趾)。Hallux 為腳拇趾。"
     },
     {
@@ -1168,7 +1168,7 @@
       "origin": "腓骨下三分之一的前面及骨間膜",
       "insertion": "第 5 蹠骨底的背側",
       "image_label": "",
-      "img": "images/image102.jpeg",
+      "img": "image102.jpeg",
       "note": "校註:中文「第三腓長肌」應為「第三腓骨肌」(腓長肌另指 Peroneus Longus);此肌可能缺如,並非每個人都有。"
     },
     {
@@ -1180,7 +1180,7 @@
       "origin": "腓骨頭與腓骨外側近端2/3處",
       "insertion": "第一蹠骨基部和內楔狀骨",
       "image_label": "",
-      "img": "images/image103.jpeg"
+      "img": "image103.jpeg"
     },
     {
       "id": "104",
@@ -1191,7 +1191,7 @@
       "origin": "腓骨外側遠端2/3處",
       "insertion": "第五蹠骨粗隆",
       "image_label": "",
-      "img": "images/image104.jpeg"
+      "img": "image104.jpeg"
     },
     {
       "id": "105",
@@ -1202,7 +1202,7 @@
       "origin": "股骨髁後面",
       "insertion": "透過跟腱和跟骨相連",
       "image_label": "",
-      "img": "images/image105.jpeg",
+      "img": "image105.jpeg",
       "note": "校註:英文「Gastroconemius」拼字錯,應為「Gastrocnemius」。腓腸肌跨膝關節,故同時為踝屈與屈膝肌;主作用為踝蹠屈,不做 inversion(原文 inversion 為錯誤敘述)。"
     },
     {
@@ -1214,7 +1214,7 @@
       "origin": "比目魚肌線、脛骨後側面近端和腓骨頭後側",
       "insertion": "透過跟腱與跟骨相連",
       "image_label": "",
-      "img": "images/image106.jpeg",
+      "img": "image106.jpeg",
       "note": "校註:比目魚肌僅作用於踝(plantar flexion),不像腓腸肌跨膝;站立穩定 ankle 的主要肌肉。"
     },
     {
@@ -1226,7 +1226,7 @@
       "origin": "股骨外側上髁線",
       "insertion": "透過跟腱連接到跟骨",
       "image_label": "",
-      "img": "images/image107.jpeg",
+      "img": "image107.jpeg",
       "note": "校註:蹠肌為退化肌(vestigial),作用微弱;主要參與本體感覺;原文 inversion 為錯誤敘述。"
     },
     {
@@ -1238,7 +1238,7 @@
       "origin": "脛骨後面中1/3",
       "insertion": "第 2 -5 趾遠節趾骨底部",
       "image_label": "",
-      "img": "images/image108.jpeg",
+      "img": "image108.jpeg",
       "note": "校註:英文「Felxor」拼字錯,應為「Flexor」。"
     },
     {
@@ -1250,7 +1250,7 @@
       "origin": "腓腸後面2/3",
       "insertion": "拇指末端基底部",
       "image_label": "",
-      "img": "images/image109.jpeg",
+      "img": "image109.jpeg",
       "note": "校註:中文「拇指末端」應為「拇趾末端」(腳趾);起點原文「腓腸後面 2/3」應為「腓骨 fibula 後面下 2/3」(腓腸=腓腸肌,完全不同的結構);內側縱弓的重要穩定者。"
     },
     {
@@ -1262,7 +1262,7 @@
       "origin": "脛骨與腓骨的後側骨幹近端和骨間膜",
       "insertion": "五個跗骨和第二到第四蹠骨基部",
       "image_label": "",
-      "img": "images/image110.jpeg"
+      "img": "image110.jpeg"
     }
   ]
 }
