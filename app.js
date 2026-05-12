@@ -287,26 +287,54 @@ function renderAll() {
     case 'stats': renderStats(c); break;
   }
   // Auto-collapse filter bar during active learning sessions
-  autoToggleFilterBar();
+  applyFocusMode();
 }
 
-function autoToggleFilterBar() {
-  const fb = document.getElementById('filterBar');
-  if (!fb) return;
-  // Keep open in: browse, stats, wrong (no active quiz UI)
-  // Auto-collapse in: practice, exam (during quiz), img2name, name2img, recall
+const MODE_LABELS = {
+  browse: '圖卡瀏覽',
+  practice: '選擇複習',
+  exam: '模擬考',
+  img2name: '看圖認名',
+  name2img: '看名選圖',
+  recall: '完整回想',
+  wrong: '錯題複習',
+  stats: '統計記錄'
+};
+
+function applyFocusMode() {
   const learningModes = ['practice', 'exam', 'img2name', 'name2img', 'recall'];
-  const isLearning = learningModes.includes(state.mode);
-  // For exam, only collapse when in mid-exam (not intro / not result)
+  let isFocus = learningModes.includes(state.mode);
+  // For exam, only focus when in mid-exam (not intro / not result)
   if (state.mode === 'exam' && (!examSession || examSession.finished)) {
-    fb.open = true;
-    return;
+    isFocus = false;
   }
-  if (isLearning) {
-    fb.open = false;
-  } else {
-    fb.open = true;
+  document.body.classList.toggle('focus-mode', isFocus);
+  
+  // Update focus topbar content
+  if (isFocus) {
+    const modeLabel = document.getElementById('focusModeLabel');
+    const progress = document.getElementById('focusProgress');
+    if (modeLabel) modeLabel.textContent = MODE_LABELS[state.mode] || state.mode;
+    if (progress) progress.textContent = computeProgressText();
   }
+  
+  // Sync the always-visible top filter bar (for non-focus modes)
+  const fb = document.getElementById('filterBar');
+  if (fb) fb.open = !isFocus;
+}
+
+function computeProgressText() {
+  if (state.mode === 'exam' && examSession && !examSession.finished) {
+    const ans = examSession.answers.filter(a => a !== null).length;
+    return `${examSession.index + 1} / ${examSession.questions.length} · 已答 ${ans}`;
+  }
+  if (state.mode === 'practice' && practiceSession) {
+    return `第 ${practiceSession.total + 1} 題 · ${practiceSession.correct}/${practiceSession.total}`;
+  }
+  if ((state.mode === 'img2name' || state.mode === 'name2img' || state.mode === 'recall') && quizSession) {
+    return `${quizSession.index + 1} / ${quizSession.queue.length}`;
+  }
+  return '';
 }
 
 // ====== Browse mode ======
@@ -1638,6 +1666,192 @@ function renderStats(container) {
   
   container.innerHTML = html;
 }
+
+// ====== Settings modal ======
+function openSettingsModal() {
+  const modal = document.getElementById('settingsModal');
+  if (!modal) return;
+  buildSettingsModal();
+  modal.hidden = false;
+}
+function closeSettingsModal() {
+  const modal = document.getElementById('settingsModal');
+  if (!modal) return;
+  modal.hidden = true;
+  // Re-render to reflect any settings changes made inside the modal
+  renderAll();
+}
+
+function buildSettingsModal() {
+  // Mode grid
+  const modeGrid = document.getElementById('settingsModeGrid');
+  if (modeGrid) {
+    modeGrid.innerHTML = '';
+    Object.entries(MODE_LABELS).forEach(([key, label], idx) => {
+      const num = String(idx + 1).padStart(2, '0');
+      const btn = document.createElement('button');
+      btn.className = 'settings-mode-btn' + (state.mode === key ? ' active' : '');
+      btn.innerHTML = `<span class="smb-num">${num}</span><span>${label}</span>`;
+      btn.addEventListener('click', () => {
+        state.mode = key;
+        saveState();
+        document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === state.mode));
+        quizSession = null;
+        examSession = null;
+        practiceSession = null;
+        closeSettingsModal();
+        renderAll();
+      });
+      modeGrid.appendChild(btn);
+    });
+  }
+  
+  // Chapter chips
+  const chipBox = document.getElementById('modalSectionChips');
+  if (chipBox) {
+    chipBox.innerHTML = '';
+    SECTION_ORDER.forEach(sec => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (state.selectedSections.includes(sec) ? ' active' : '');
+      const short = SECTION_SHORT[sec] || sec;
+      const count = ALL_ITEMS.filter(it => it.section === sec).length;
+      chip.innerHTML = `${short} <span style="opacity:.6;font-family:'JetBrains Mono',monospace;font-size:10px;margin-left:2px">·${count}</span>`;
+      chip.title = sec;
+      chip.addEventListener('click', () => {
+        if (state.selectedSections.includes(sec)) {
+          state.selectedSections = state.selectedSections.filter(s => s !== sec);
+        } else {
+          state.selectedSections.push(sec);
+        }
+        saveState();
+        quizSession = null; examSession = null; practiceSession = null;
+        buildSettingsModal();
+        renderSectionChips();
+      });
+      chipBox.appendChild(chip);
+    });
+  }
+  
+  // Mode-specific options (题型 / 作答方向)
+  const optSection = document.getElementById('modalOptionsSection');
+  const optLabel = document.getElementById('modalOptionsLabel');
+  const optBox = document.getElementById('modalModeOptions');
+  if (optSection && optLabel && optBox) {
+    optBox.innerHTML = '';
+    if (state.mode === 'practice') {
+      optSection.style.display = '';
+      optLabel.textContent = '練習題型';
+      Object.entries(QTYPE_LABEL).forEach(([key, label]) => {
+        const c = document.createElement('button');
+        c.className = 'chip' + (state.practiceConfig.qtypes.includes(key) ? ' active' : '');
+        c.textContent = label;
+        c.addEventListener('click', () => {
+          const cfg = state.practiceConfig;
+          if (cfg.qtypes.includes(key)) {
+            if (cfg.qtypes.length === 1) return;
+            cfg.qtypes = cfg.qtypes.filter(t => t !== key);
+          } else {
+            cfg.qtypes.push(key);
+          }
+          saveState();
+          practiceSession = null;
+          buildSettingsModal();
+        });
+        optBox.appendChild(c);
+      });
+    } else if (state.mode === 'exam') {
+      optSection.style.display = '';
+      optLabel.textContent = '模擬考題型';
+      Object.entries(QTYPE_LABEL).forEach(([key, label]) => {
+        const c = document.createElement('button');
+        c.className = 'chip' + (state.examConfig.qtypes.includes(key) ? ' active' : '');
+        c.textContent = label;
+        c.addEventListener('click', () => {
+          const cfg = state.examConfig;
+          if (cfg.qtypes.includes(key)) {
+            if (cfg.qtypes.length === 1) return;
+            cfg.qtypes = cfg.qtypes.filter(t => t !== key);
+          } else {
+            cfg.qtypes.push(key);
+          }
+          saveState();
+          buildSettingsModal();
+        });
+        optBox.appendChild(c);
+      });
+    } else if (state.mode === 'img2name') {
+      optSection.style.display = '';
+      optLabel.textContent = '作答方向';
+      [{val:'zh',label:'答中文名'},{val:'en',label:'答英文名'}].forEach(o => {
+        const c = document.createElement('button');
+        c.className = 'chip' + (state.img2nameDir === o.val ? ' active' : '');
+        c.textContent = o.label;
+        c.addEventListener('click', () => { state.img2nameDir = o.val; saveState(); buildSettingsModal(); });
+        optBox.appendChild(c);
+      });
+    } else if (state.mode === 'name2img') {
+      optSection.style.display = '';
+      optLabel.textContent = '顯示語言';
+      [{val:'zh',label:'顯示中文名'},{val:'en',label:'顯示英文名'}].forEach(o => {
+        const c = document.createElement('button');
+        c.className = 'chip' + (state.name2imgDir === o.val ? ' active' : '');
+        c.textContent = o.label;
+        c.addEventListener('click', () => { state.name2imgDir = o.val; saveState(); buildSettingsModal(); });
+        optBox.appendChild(c);
+      });
+    } else {
+      optSection.style.display = 'none';
+    }
+  }
+  
+  // Theme toggle
+  const tb = document.getElementById('modalThemeToggle');
+  if (tb) tb.textContent = state.theme === 'sun' ? 'Sunlight ☀' : 'Warm ☼';
+}
+
+// Wire up settings modal events
+document.getElementById('focusGear')?.addEventListener('click', openSettingsModal);
+document.getElementById('settingsClose')?.addEventListener('click', closeSettingsModal);
+document.getElementById('settingsBackdrop')?.addEventListener('click', closeSettingsModal);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSettingsModal();
+});
+
+document.getElementById('modalSelectAll')?.addEventListener('click', e => {
+  e.stopPropagation();
+  state.selectedSections = SECTION_ORDER.slice();
+  saveState();
+  quizSession = null; examSession = null; practiceSession = null;
+  buildSettingsModal();
+  renderSectionChips();
+});
+document.getElementById('modalSelectNone')?.addEventListener('click', e => {
+  e.stopPropagation();
+  state.selectedSections = [];
+  saveState();
+  quizSession = null; examSession = null; practiceSession = null;
+  buildSettingsModal();
+  renderSectionChips();
+});
+document.getElementById('modalThemeToggle')?.addEventListener('click', () => {
+  state.theme = state.theme === 'sun' ? 'warm' : 'sun';
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.getElementById('themeToggle').textContent = state.theme === 'sun' ? 'Sunlight ☀' : 'Warm ☼';
+  document.getElementById('modalThemeToggle').textContent = state.theme === 'sun' ? 'Sunlight ☀' : 'Warm ☼';
+  saveState();
+});
+document.getElementById('modalResetStats')?.addEventListener('click', () => {
+  if (confirm('確定重置所有答題紀錄、考試歷史與錯題區?')) {
+    stats = { byItem: {}, total: { correct: 0, wrong: 0 } };
+    examHistory = [];
+    wrongBank = {};
+    saveStats();
+    saveExamHistory();
+    saveWrongBank();
+    closeSettingsModal();
+    renderAll();
+  }
+});
 
 // ====== Boot ======
 (async function boot() {

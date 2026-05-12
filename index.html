@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>STOTT Pilates 肌肉學 ☀ 自考圖卡</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1356,10 +1356,13 @@ footer.colophon {
   .card-en { font-size: 16px; }
   .card-zh { font-size: 15px; }
   .field { font-size: 12px; }
-  .quiz-stage { padding: 18px; }
-  .choice-grid { grid-template-columns: 1fr; }
+  .quiz-stage { padding: 14px; }
+  .choice-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .choice { padding: 10px 12px; font-size: 13px; }
+  .choice .choice-en { font-size: 13px; }
+  .choice .choice-zh { font-size: 14px; }
   .img-choice-grid { grid-template-columns: 1fr 1fr; }
-  .img-choice .ic-imgbox { height: 110px; }
+  .img-choice .ic-imgbox { height: 100px; }
   .sp-row { grid-template-columns: 1fr 60px 80px; font-size: 13px; }
   .stat-value { font-size: 32px; }
   .filter-label { min-width: 60px; font-size: 9px; }
@@ -1372,9 +1375,332 @@ footer.colophon {
   .review-item { gap: 10px; }
   .rb-thumb { width: 48px; height: 48px; }
 }
+/* ===== Focus mode (沉浸式學習模式) ===== */
+.focus-topbar {
+  position: fixed;
+  top: env(safe-area-inset-top, 0);
+  left: 0;
+  right: 0;
+  height: 32px;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 0 56px 0 18px;
+  background: rgba(255, 248, 231, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 12px;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+}
+.focus-topbar .ft-brand {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--tangerine-deep);
+  letter-spacing: 1.5px;
+}
+.focus-topbar .ft-divider {
+  color: var(--ink-soft);
+  opacity: 0.5;
+}
+.focus-topbar .ft-mode {
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+.focus-topbar .ft-meta {
+  margin-left: auto;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+}
+
+.focus-gear {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 4px);
+  right: 12px;
+  z-index: 90;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 var(--shadow-strong);
+  transition: transform 0.2s, background 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+.focus-gear:hover {
+  background: var(--sun);
+  transform: rotate(45deg);
+}
+.focus-gear:active {
+  transform: rotate(90deg);
+}
+
+/* When in focus mode, hide all the normal chrome */
+body.focus-mode .shell > header.masthead,
+body.focus-mode .shell > nav.mode-tabs,
+body.focus-mode .shell > details.filter-bar,
+body.focus-mode .shell > .ornament,
+body.focus-mode .shell > footer.colophon {
+  display: none !important;
+}
+body.focus-mode .focus-topbar { display: flex; }
+body.focus-mode .focus-gear { display: flex; }
+body.focus-mode .shell {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 40px);
+  padding-bottom: env(safe-area-inset-bottom, 12px);
+  padding-left: 14px;
+  padding-right: 14px;
+  max-width: 720px;
+}
+body.focus-mode #content > .quiz-stage {
+  padding: 14px;
+  box-shadow: none;
+  border-radius: 6px;
+}
+
+/* In focus mode, image is the visual hero */
+body.focus-mode .quiz-img-frame,
+body.focus-mode .exam-img-frame {
+  max-width: 100%;
+  margin: 0 auto 12px;
+  min-height: 0;
+  padding: 10px;
+}
+body.focus-mode .quiz-img-frame img,
+body.focus-mode .exam-img-frame img {
+  max-height: 46vh;
+  height: auto;
+}
+body.focus-mode .quiz-stage .exam-prompt,
+body.focus-mode .quiz-stage .quiz-question {
+  margin: 8px 0 12px;
+  font-size: 14.5px;
+}
+body.focus-mode .exam-progress-bar {
+  margin-bottom: 8px;
+}
+body.focus-mode .quiz-progress {
+  font-size: 10.5px;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+body.focus-mode .exam-question-meta {
+  font-size: 10.5px;
+  margin-bottom: 2px;
+}
+
+/* ===== Settings modal ===== */
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4vh 16px 16px;
+  overflow-y: auto;
+}
+.settings-modal[hidden] { display: none; }
+.settings-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 31, 10, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.settings-modal-panel {
+  position: relative;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 6px 6px 0 var(--shadow-strong);
+  max-width: 560px;
+  width: 100%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideDown 0.25s ease;
+}
+@keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.settings-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--bg-warm);
+  border-bottom: 1.5px solid var(--rule);
+  border-radius: 6px 6px 0 0;
+}
+.settings-modal-header h2 {
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--ink);
+  margin: 0;
+}
+.settings-close {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 0;
+  transition: background 0.15s;
+}
+.settings-close:hover {
+  background: var(--rose);
+  color: var(--paper);
+  border-color: var(--rose);
+}
+.settings-modal-body {
+  padding: 18px 20px 22px;
+  overflow-y: auto;
+}
+.settings-section {
+  margin-bottom: 18px;
+}
+.settings-section:last-child { margin-bottom: 0; }
+.settings-section-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.settings-mini-btn {
+  font-size: 11px !important;
+  padding: 2px 5px !important;
+}
+.settings-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.settings-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.settings-mode-btn {
+  background: var(--bg-warm);
+  border: 1.5px solid var(--rule);
+  padding: 10px 12px;
+  font-family: "Noto Serif TC", serif;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+.settings-mode-btn:hover {
+  border-color: var(--ink);
+  background: var(--highlight);
+}
+.settings-mode-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.settings-mode-btn .smb-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+.settings-mode-btn.active .smb-num {
+  color: var(--sun);
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .settings-modal-panel { max-height: 95vh; }
+  .settings-modal-header { padding: 12px 16px; }
+  .settings-modal-body { padding: 14px 16px 18px; }
+  .settings-mode-grid { grid-template-columns: 1fr 1fr; }
+  .settings-mode-btn { padding: 8px 10px; font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
+
+<!-- Focus mode top bar (only visible during learning modes) -->
+<div class="focus-topbar" id="focusTopbar">
+  <span class="ft-brand">STOTT</span>
+  <span class="ft-divider">·</span>
+  <span class="ft-mode" id="focusModeLabel">—</span>
+  <span class="ft-meta" id="focusProgress"></span>
+</div>
+
+<!-- Floating settings gear -->
+<button class="focus-gear" id="focusGear" aria-label="設定">⚙</button>
+
+<!-- Settings modal (overlays everything when open) -->
+<div class="settings-modal" id="settingsModal" hidden>
+  <div class="settings-modal-backdrop" id="settingsBackdrop"></div>
+  <div class="settings-modal-panel">
+    <div class="settings-modal-header">
+      <h2>設定區</h2>
+      <button class="settings-close" id="settingsClose" aria-label="關閉">×</button>
+    </div>
+    <div class="settings-modal-body" id="settingsBody">
+      <!-- Mode selection -->
+      <div class="settings-section">
+        <div class="settings-section-label">模式</div>
+        <div class="settings-mode-grid" id="settingsModeGrid"></div>
+      </div>
+      <!-- Chapter selection -->
+      <div class="settings-section">
+        <div class="settings-section-label">章節 <button class="chip-action settings-mini-btn" id="modalSelectAll">全選</button> <button class="chip-action settings-mini-btn" id="modalSelectNone">清空</button></div>
+        <div class="settings-chip-row" id="modalSectionChips"></div>
+      </div>
+      <!-- Mode-specific options (qtypes, dir) -->
+      <div class="settings-section" id="modalOptionsSection" style="display:none">
+        <div class="settings-section-label" id="modalOptionsLabel">題型</div>
+        <div class="settings-chip-row" id="modalModeOptions"></div>
+      </div>
+      <!-- Theme -->
+      <div class="settings-section">
+        <div class="settings-section-label">主題</div>
+        <button class="chip" id="modalThemeToggle">Sunlight ☀</button>
+        <button class="chip-action settings-mini-btn" id="modalResetStats" style="margin-left:14px">重置進度</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="shell">
 
 <header class="masthead">
