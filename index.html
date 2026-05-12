@@ -225,14 +225,61 @@ header.masthead::before {
 }
 .mode-tab.exam-tab.active .num { color: var(--rose); }
 
-/* ===== Filter panel ===== */
+/* ===== Filter panel (collapsible) ===== */
 .filter-bar {
   background: var(--paper);
   border: 1.5px solid var(--ink);
-  padding: 16px 20px;
   margin-bottom: 22px;
   box-shadow: 4px 4px 0 var(--shadow-strong);
   border-radius: 4px;
+  overflow: hidden;
+}
+
+.filter-summary {
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-warm);
+  border-bottom: 1.5px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+  list-style: none;
+  user-select: none;
+}
+.filter-summary::-webkit-details-marker { display: none; }
+.filter-bar[open] .filter-summary {
+  border-bottom-color: var(--rule);
+}
+.filter-summary:hover {
+  background: var(--highlight);
+}
+.filter-summary-title {
+  font-family: "Fraunces", "Noto Serif TC", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 3px;
+}
+.filter-summary-meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+  flex: 1;
+}
+.filter-summary-toggle {
+  font-size: 18px;
+  color: var(--sun-deep);
+  transition: transform 0.2s ease;
+  font-weight: 600;
+}
+.filter-bar[open] .filter-summary-toggle {
+  transform: rotate(180deg);
+}
+
+.filter-body {
+  padding: 16px 20px;
 }
 
 .filter-row {
@@ -329,7 +376,7 @@ header.masthead::before {
 .card-img-wrap {
   background: linear-gradient(135deg, var(--bg-warm) 0%, #fff 100%);
   border-bottom: 1.5px solid var(--ink);
-  height: 200px;
+  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -423,6 +470,51 @@ header.masthead::before {
   margin-right: 4px;
 }
 
+.action-en-toggle {
+  margin-top: 3px;
+  margin-left: 27px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  font-family: "Fraunces", "Noto Serif TC", serif;
+}
+.action-en-toggle summary {
+  cursor: pointer;
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: var(--sky-deep);
+  text-transform: uppercase;
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+  padding: 1px 5px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  background: var(--bg-warm);
+  transition: background 0.15s;
+}
+.action-en-toggle summary::-webkit-details-marker { display: none; }
+.action-en-toggle summary:hover {
+  background: var(--highlight);
+  color: var(--ink);
+}
+.action-en-toggle[open] summary {
+  margin-bottom: 4px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.action-en-toggle > span {
+  display: block;
+  padding: 4px 7px;
+  background: var(--paper);
+  border-left: 2px solid var(--sky);
+  font-style: italic;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 /* ===== Quiz shared ===== */
 .quiz-stage {
   background: var(--paper);
@@ -459,12 +551,12 @@ header.masthead::before {
   align-items: center;
   justify-content: center;
   margin-bottom: 22px;
-  min-height: 320px;
+  min-height: 380px;
   border-radius: 4px;
 }
 .quiz-img-frame img {
   max-width: 100%;
-  max-height: 380px;
+  max-height: 440px;
   object-fit: contain;
 }
 
@@ -941,13 +1033,13 @@ header.masthead::before {
   align-items: center;
   justify-content: center;
   margin: 0 auto 18px;
-  min-height: 260px;
-  max-width: 380px;
+  min-height: 320px;
+  max-width: 480px;
   border-radius: 4px;
 }
 .exam-img-frame img {
   max-width: 100%;
-  max-height: 320px;
+  max-height: 400px;
   object-fit: contain;
 }
 
@@ -1302,31 +1394,38 @@ footer.colophon {
 
 <nav class="mode-tabs" id="modeTabs">
   <button class="mode-tab active" data-mode="browse"><span class="num">01</span>圖卡瀏覽</button>
-  <button class="mode-tab" data-mode="img2name"><span class="num">02</span>看圖認名</button>
-  <button class="mode-tab" data-mode="name2img"><span class="num">03</span>看名選圖</button>
-  <button class="mode-tab" data-mode="recall"><span class="num">04</span>完整回想</button>
-  <button class="mode-tab exam-tab" data-mode="exam"><span class="num">05</span>模擬考</button>
-  <button class="mode-tab" data-mode="stats"><span class="num">06</span>統計記錄</button>
+  <button class="mode-tab" data-mode="practice"><span class="num">02</span>選擇複習</button>
+  <button class="mode-tab exam-tab" data-mode="exam"><span class="num">03</span>模擬考</button>
+  <button class="mode-tab" data-mode="img2name"><span class="num">04</span>看圖認名</button>
+  <button class="mode-tab" data-mode="name2img"><span class="num">05</span>看名選圖</button>
+  <button class="mode-tab" data-mode="recall"><span class="num">06</span>完整回想</button>
+  <button class="mode-tab" data-mode="wrong"><span class="num">07</span>錯題複習</button>
+  <button class="mode-tab" data-mode="stats"><span class="num">08</span>統計記錄</button>
 </nav>
 
-<div class="filter-bar" id="filterBar">
-  <div class="filter-row">
-    <span class="filter-label">章節</span>
-    <div id="sectionChips" style="display: contents;"></div>
+<details class="filter-bar" id="filterBar" open>
+  <summary class="filter-summary">
+    <span class="filter-summary-title">設定區</span>
+    <span class="filter-summary-meta" id="summaryText">—</span>
+    <span class="filter-summary-toggle">▾</span>
+  </summary>
+  <div class="filter-body">
+    <div class="filter-row">
+      <span class="filter-label">章節</span>
+      <div id="sectionChips" style="display: contents;"></div>
+    </div>
+    <div class="filter-row" id="modeOptionsRow" style="display:none;">
+      <span class="filter-label" id="modeOptionsLabel">作答方向</span>
+      <div id="modeOptions" style="display: contents;"></div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">操作</span>
+      <button class="chip-action" id="selectAll">全選</button>
+      <button class="chip-action" id="selectNone">清空</button>
+      <button class="chip-action" id="resetStats">重置進度</button>
+    </div>
   </div>
-  <div class="filter-row" id="modeOptionsRow" style="display:none;">
-    <span class="filter-label" id="modeOptionsLabel">作答方向</span>
-    <div id="modeOptions" style="display: contents;"></div>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">操作</span>
-    <button class="chip-action" id="selectAll">全選</button>
-    <button class="chip-action" id="selectNone">清空</button>
-    <button class="chip-action" id="resetStats">重置進度</button>
-    <span style="flex:1"></span>
-    <span class="summary-text" id="summaryText">—</span>
-  </div>
-</div>
+</details>
 
 <main id="content"></main>
 

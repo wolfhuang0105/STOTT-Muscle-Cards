@@ -58,6 +58,7 @@ const QTYPE_LABEL = {
 const STATE_KEY = 'stott_muscle_state_v2';
 const STATS_KEY = 'stott_muscle_stats_v2';
 const EXAM_KEY = 'stott_muscle_exam_v2';
+const WRONG_KEY = 'stott_muscle_wrongbank_v2';
 
 function loadState() {
   try {
@@ -72,7 +73,10 @@ function loadState() {
     theme: 'sun',
     examConfig: {
       questionCount: 25,
-      qtypes: ['img2en', 'img2zh', 'en2img', 'zh2img', 'action2muscle']
+      qtypes: ['img2zh']  // default to "看圖選中文名"
+    },
+    practiceConfig: {
+      qtypes: ['img2zh']  // default for practice mode too
     }
   };
 }
@@ -93,10 +97,25 @@ function loadExamHistory() {
 function saveExamHistory() {
   try { localStorage.setItem(EXAM_KEY, JSON.stringify(examHistory)); } catch (e) {}
 }
+function loadWrongBank() {
+  try { return JSON.parse(localStorage.getItem(WRONG_KEY)) || {}; } catch (e) {}
+  return {};
+}
+function saveWrongBank() {
+  try { localStorage.setItem(WRONG_KEY, JSON.stringify(wrongBank)); } catch (e) {}
+}
 
 let state = loadState();
 let stats = loadStats();
 let examHistory = loadExamHistory();
+let wrongBank = loadWrongBank();
+
+// Migration: ensure structures exist for old saved state
+if (!state.examConfig) state.examConfig = { questionCount: 25, qtypes: ['img2zh'] };
+if (!state.practiceConfig) state.practiceConfig = { qtypes: ['img2zh'] };
+if (!state.examConfig.qtypes || state.examConfig.qtypes.length === 0) state.examConfig.qtypes = ['img2zh'];
+if (!state.practiceConfig.qtypes || state.practiceConfig.qtypes.length === 0) state.practiceConfig.qtypes = ['img2zh'];
+saveState();
 
 // Theme
 document.documentElement.setAttribute('data-theme', state.theme);
@@ -142,6 +161,7 @@ function renderSectionChips() {
       saveState();
       quizSession = null;
       examSession = null;
+      practiceSession = null;
       renderSectionChips();
       renderAll();
     });
@@ -151,18 +171,20 @@ function renderSectionChips() {
 
 document.getElementById('selectAll').addEventListener('click', () => {
   state.selectedSections = SECTION_ORDER.slice();
-  saveState(); quizSession = null; examSession = null; renderSectionChips(); renderAll();
+  saveState(); quizSession = null; examSession = null; practiceSession = null; renderSectionChips(); renderAll();
 });
 document.getElementById('selectNone').addEventListener('click', () => {
   state.selectedSections = [];
-  saveState(); quizSession = null; examSession = null; renderSectionChips(); renderAll();
+  saveState(); quizSession = null; examSession = null; practiceSession = null; renderSectionChips(); renderAll();
 });
 document.getElementById('resetStats').addEventListener('click', () => {
-  if (confirm('確定重置所有答題紀錄與考試歷史?')) {
+  if (confirm('確定重置所有答題紀錄、考試歷史與錯題區?')) {
     stats = { byItem: {}, total: { correct: 0, wrong: 0 } };
     examHistory = [];
+    wrongBank = {};
     saveStats();
     saveExamHistory();
+    saveWrongBank();
     renderAll();
   }
 });
@@ -175,6 +197,7 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
     document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === state.mode));
     quizSession = null;
     examSession = null;
+    practiceSession = null;
     renderAll();
   });
 });
@@ -207,6 +230,29 @@ function renderModeOptions() {
       c.addEventListener('click', () => { state.name2imgDir = o.val; saveState(); renderModeOptions(); renderAll(); });
       box.appendChild(c);
     });
+  } else if (state.mode === 'practice') {
+    row.style.display = '';
+    labelEl.textContent = '練習題型';
+    if (!state.practiceConfig) state.practiceConfig = { qtypes: ['img2zh'] };
+    Object.entries(QTYPE_LABEL).forEach(([key, label]) => {
+      const c = document.createElement('button');
+      c.className = 'chip' + (state.practiceConfig.qtypes.includes(key) ? ' active' : '');
+      c.textContent = label;
+      c.addEventListener('click', () => {
+        const cfg = state.practiceConfig;
+        if (cfg.qtypes.includes(key)) {
+          if (cfg.qtypes.length === 1) return;
+          cfg.qtypes = cfg.qtypes.filter(t => t !== key);
+        } else {
+          cfg.qtypes.push(key);
+        }
+        saveState();
+        practiceSession = null;
+        renderModeOptions();
+        renderAll();
+      });
+      box.appendChild(c);
+    });
   } else {
     row.style.display = 'none';
   }
@@ -232,11 +278,34 @@ function renderAll() {
   
   switch (state.mode) {
     case 'browse': renderBrowse(c, items); break;
+    case 'practice': renderPractice(c, items); break;
+    case 'exam': renderExam(c, items); break;
     case 'img2name': renderImg2Name(c, items); break;
     case 'name2img': renderName2Img(c, items); break;
     case 'recall': renderRecall(c, items); break;
-    case 'exam': renderExam(c, items); break;
+    case 'wrong': renderWrongBank(c); break;
     case 'stats': renderStats(c); break;
+  }
+  // Auto-collapse filter bar during active learning sessions
+  autoToggleFilterBar();
+}
+
+function autoToggleFilterBar() {
+  const fb = document.getElementById('filterBar');
+  if (!fb) return;
+  // Keep open in: browse, stats, wrong (no active quiz UI)
+  // Auto-collapse in: practice, exam (during quiz), img2name, name2img, recall
+  const learningModes = ['practice', 'exam', 'img2name', 'name2img', 'recall'];
+  const isLearning = learningModes.includes(state.mode);
+  // For exam, only collapse when in mid-exam (not intro / not result)
+  if (state.mode === 'exam' && (!examSession || examSession.finished)) {
+    fb.open = true;
+    return;
+  }
+  if (isLearning) {
+    fb.open = false;
+  } else {
+    fb.open = true;
   }
 }
 
@@ -251,13 +320,16 @@ function renderBrowse(container, items) {
     const noteHtml = item.note
       ? `<div class="card-note"><span class="note-label">校註</span>${item.note}</div>`
       : '';
+    const actionEnHtml = item.action_en
+      ? `<details class="action-en-toggle"><summary>英文原文</summary><span>${escapeHtml(item.action_en)}</span></details>`
+      : '';
     card.innerHTML = `
       <div class="card-img-wrap"><img src="${item.img}" alt="${item.en}" loading="lazy"></div>
       <div class="card-body">
         <div class="card-section">${shortSec}${item.image_label ? ` · <span class="card-label-tag" style="margin-left:6px">${item.image_label}</span>` : ''}</div>
         <div class="card-en">${item.en}</div>
         <div class="card-zh">${item.zh}</div>
-        <div class="field"><span class="field-label">A</span><span class="field-text">${item.action || '—'}</span></div>
+        <div class="field"><span class="field-label">A</span><span class="field-text">${item.action || '—'}</span>${actionEnHtml}</div>
         <div class="field"><span class="field-label">起</span><span class="field-text">${item.origin || '—'}</span></div>
         <div class="field"><span class="field-label">止</span><span class="field-text">${item.insertion || '—'}</span></div>
         ${noteHtml}
@@ -281,7 +353,7 @@ function startQuizSession(items) {
   };
 }
 
-function recordResult(item, correct) {
+function recordResult(item, correct, qtype) {
   if (!stats.byItem[item.id]) stats.byItem[item.id] = { correct: 0, wrong: 0 };
   if (correct) {
     stats.byItem[item.id].correct++;
@@ -291,8 +363,32 @@ function recordResult(item, correct) {
     stats.byItem[item.id].wrong++;
     stats.total.wrong++;
     if (quizSession) quizSession.wrong++;
+    // Auto-add to wrong bank
+    addToWrongBank(item, qtype);
   }
   saveStats();
+}
+
+function addToWrongBank(item, qtype) {
+  if (!wrongBank[item.id]) {
+    wrongBank[item.id] = {
+      count: 0,
+      firstWrongAt: new Date().toISOString(),
+      lastWrongAt: null,
+      qtypes: []
+    };
+  }
+  wrongBank[item.id].count++;
+  wrongBank[item.id].lastWrongAt = new Date().toISOString();
+  if (qtype && !wrongBank[item.id].qtypes.includes(qtype)) {
+    wrongBank[item.id].qtypes.push(qtype);
+  }
+  saveWrongBank();
+}
+
+function removeFromWrongBank(id) {
+  delete wrongBank[id];
+  saveWrongBank();
 }
 
 function progressHeaderHTML() {
@@ -355,7 +451,7 @@ function renderImg2Name(container, items) {
   function showFeedback(isCorrect) {
     fb.classList.add('show');
     quizSession.judged = true;
-    recordResult(item, isCorrect);
+    recordResult(item, isCorrect, 'img2' + dir);
     fb.innerHTML = `
       <div class="qf-status ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '✓ 答對' : '✗ 再記一次'}</div>
       <div class="qf-details">${detailHtml()}</div>
@@ -377,8 +473,8 @@ function renderImg2Name(container, items) {
       </div>
     `;
     reveal.disabled = true; skip.disabled = true; input.disabled = true;
-    document.getElementById('judgeRight').addEventListener('click', () => { recordResult(item, true); nextQ(); });
-    document.getElementById('judgeWrong').addEventListener('click', () => { recordResult(item, false); nextQ(); });
+    document.getElementById('judgeRight').addEventListener('click', () => { recordResult(item, true, 'img2' + dir); nextQ(); });
+    document.getElementById('judgeWrong').addEventListener('click', () => { recordResult(item, false, 'img2' + dir); nextQ(); });
   }
   function checkAnswer() {
     const ans = input.value.trim();
@@ -397,7 +493,7 @@ function renderImg2Name(container, items) {
     }
   });
   reveal.addEventListener('click', showRevealOnly);
-  skip.addEventListener('click', () => { recordResult(item, false); nextQ(); });
+  skip.addEventListener('click', () => { recordResult(item, false, 'img2' + dir); nextQ(); });
 }
 
 // ----- Name2Img -----
@@ -452,7 +548,7 @@ function renderName2Img(container, items) {
       if (quizSession.judged) return;
       quizSession.judged = true;
       const correct = c.id === item.id;
-      recordResult(item, correct);
+      recordResult(item, correct, dir + '2img');
       grid.querySelectorAll('.img-choice').forEach((el, i) => {
         if (choices[i].id === item.id) el.classList.add('correct');
         else if (i === idx) el.classList.add('incorrect');
@@ -546,7 +642,7 @@ function renderRecall(container, items) {
   function advance(correct) {
     if (quizSession.judged) return;
     quizSession.judged = true;
-    recordResult(item, correct);
+    recordResult(item, correct, 'recall');
     quizSession.index++; quizSession.judged = false;
     renderAll();
   }
@@ -872,7 +968,7 @@ function finalizeExam() {
     const isCorrect = ansIdx !== null && q.choices[ansIdx].id === q.correctId;
     if (isCorrect) correct++;
     // Also record into overall stats
-    recordResult(q.item, isCorrect);
+    recordResult(q.item, isCorrect, q.qtype);
   });
   sess.finished = true;
   sess.correct = correct;
@@ -1039,6 +1135,381 @@ function examPromptText(q) {
 
 function escapeHtml(s) {
   return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ====== Practice mode (看圖選擇複習) - smart spaced repetition ======
+let practiceSession = null;
+
+function pickSmartItem(items, recentIds) {
+  // Score each item: lower score = higher priority
+  // - Wrong-bank items (high priority, but throttled to 30%)
+  // - Unfamiliar items (no record, or < 60% accuracy): 70%
+  // - Recent items penalized
+  
+  const wrongIds = Object.keys(wrongBank).filter(id => items.some(it => it.id === id));
+  const useWrong = Math.random() < 0.3 && wrongIds.length > 0;
+  
+  let pool = items;
+  if (useWrong) {
+    pool = items.filter(it => wrongIds.includes(it.id));
+  } else {
+    // Unfamiliar pool: no record OR accuracy < 60%
+    const unfamiliar = items.filter(it => {
+      const s = stats.byItem[it.id];
+      if (!s) return true;
+      const t = s.correct + s.wrong;
+      if (t < 2) return true;
+      return (s.correct / t) < 0.6;
+    });
+    if (unfamiliar.length > 0) {
+      pool = unfamiliar;
+    }
+  }
+  
+  // Exclude recent
+  pool = pool.filter(it => !recentIds.includes(it.id));
+  if (pool.length === 0) {
+    // Fallback: any item not in recent
+    pool = items.filter(it => !recentIds.includes(it.id));
+    if (pool.length === 0) pool = items;
+  }
+  
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function startPracticeSession(items) {
+  practiceSession = {
+    items: items,
+    recentIds: [],   // last 5 item ids to avoid immediate repeats
+    recentSections: [], // last 2 sections to vary
+    currentQuestion: null,
+    correct: 0,
+    wrong: 0,
+    total: 0,
+    judged: false
+  };
+  nextPracticeQuestion();
+}
+
+function nextPracticeQuestion() {
+  const sess = practiceSession;
+  const items = sess.items;
+  
+  // Section variety: if last 2 are same section, exclude that section
+  let pool = items;
+  if (sess.recentSections.length >= 2 && sess.recentSections[0] === sess.recentSections[1]) {
+    const blockedSection = sess.recentSections[0];
+    const filtered = items.filter(it => it.section !== blockedSection);
+    if (filtered.length >= 4) pool = filtered;
+  }
+  
+  const item = pickSmartItem(pool, sess.recentIds);
+  sess.recentIds.push(item.id);
+  if (sess.recentIds.length > 5) sess.recentIds.shift();
+  sess.recentSections.push(item.section);
+  if (sess.recentSections.length > 2) sess.recentSections.shift();
+  
+  // Build question
+  const qtype = state.practiceConfig.qtypes[Math.floor(Math.random() * state.practiceConfig.qtypes.length)];
+  const same = items.filter(x => x.section === item.section && x.id !== item.id);
+  const other = items.filter(x => x.id !== item.id);
+  const distractorPool = same.length >= 3 ? same : other;
+  const distractors = shuffle(distractorPool).slice(0, 3);
+  const choices = shuffle([item, ...distractors]);
+  
+  sess.currentQuestion = { qtype, item, choices, correctId: item.id };
+  sess.judged = false;
+}
+
+function renderPractice(container, items) {
+  if (items.length < 4) {
+    container.innerHTML = `<div class="empty"><div class="empty-title">章節項數太少</div><div>選擇複習至少需要 4 項</div></div>`;
+    return;
+  }
+  // If session is from wrong-bank, keep it; otherwise use signature-based detection
+  if (!practiceSession) {
+    startPracticeSession(items);
+    practiceSession.itemsSig = items.map(it => it.id).sort().join(',');
+  } else if (!practiceSession.fromWrongBank) {
+    const sig = items.map(it => it.id).sort().join(',');
+    if (practiceSession.itemsSig !== sig) {
+      startPracticeSession(items);
+      practiceSession.itemsSig = sig;
+    }
+  }
+  
+  const sess = practiceSession;
+  const q = sess.currentQuestion;
+  if (!q) {
+    nextPracticeQuestion();
+    renderAll();
+    return;
+  }
+  
+  const wrongInBank = !!wrongBank[q.item.id];
+  const itemStats = stats.byItem[q.item.id];
+  const familiarity = itemStats
+    ? (itemStats.correct + itemStats.wrong < 2 ? '陌生' : (itemStats.correct / (itemStats.correct + itemStats.wrong) >= 0.6 ? '熟悉' : '需加強'))
+    : '陌生';
+  const famColor = familiarity === '熟悉' ? 'var(--leaf-deep)' : familiarity === '需加強' ? 'var(--rose)' : 'var(--sun-deep)';
+  
+  const stage = document.createElement('div');
+  stage.className = 'quiz-stage';
+  
+  // Prompt + choices construction (same logic as exam)
+  let promptHtml = '';
+  let mainArea = '';
+  if (q.qtype === 'img2en' || q.qtype === 'img2zh') {
+    mainArea = `<div class="quiz-img-frame"><img src="${q.item.img}" alt="muscle"></div>`;
+    promptHtml = `<div class="exam-prompt">這塊肌肉的<span class="prompt-highlight">${q.qtype === 'img2en' ? '英文' : '中文'}名稱</span>是?</div>`;
+  } else if (q.qtype === 'en2img') {
+    promptHtml = `<div class="exam-prompt">下列哪一張圖對應 <span class="prompt-en">${q.item.en}</span> ?</div>`;
+  } else if (q.qtype === 'zh2img') {
+    promptHtml = `<div class="exam-prompt">下列哪一張圖對應 <span class="prompt-zh">${q.item.zh}</span> ?</div>`;
+  } else if (q.qtype === 'action2muscle') {
+    promptHtml = `<div class="exam-prompt">具有以下動作的肌肉是?<span class="prompt-detail">「${escapeHtml(q.item.action)}」</span></div>`;
+  } else if (q.qtype === 'origin2muscle') {
+    promptHtml = `<div class="exam-prompt">起點為下列敘述的肌肉是?<span class="prompt-detail">「${escapeHtml(q.item.origin)}」</span></div>`;
+  } else if (q.qtype === 'insertion2muscle') {
+    promptHtml = `<div class="exam-prompt">止點為下列敘述的肌肉是?<span class="prompt-detail">「${escapeHtml(q.item.insertion)}」</span></div>`;
+  }
+  
+  let choicesHtml = '';
+  if (q.qtype === 'en2img' || q.qtype === 'zh2img') {
+    choicesHtml = `<div class="img-choice-grid">` + q.choices.map((c, idx) => `
+      <div class="img-choice" data-idx="${idx}">
+        <div class="ic-imgbox"><img src="${c.img}" alt="choice ${idx+1}"></div>
+        <div class="ic-label">${String.fromCharCode(65 + idx)}</div>
+      </div>
+    `).join('') + `</div>`;
+  } else if (q.qtype === 'img2en') {
+    choicesHtml = `<div class="choice-grid">` + q.choices.map((c, idx) => `
+      <button class="choice" data-idx="${idx}">
+        <span class="choice-letter">${String.fromCharCode(65 + idx)}</span>
+        <span class="choice-en">${c.en}</span>
+      </button>
+    `).join('') + `</div>`;
+  } else if (q.qtype === 'img2zh') {
+    choicesHtml = `<div class="choice-grid">` + q.choices.map((c, idx) => `
+      <button class="choice" data-idx="${idx}">
+        <span class="choice-letter">${String.fromCharCode(65 + idx)}</span>
+        <span class="choice-zh">${c.zh}</span>
+      </button>
+    `).join('') + `</div>`;
+  } else {
+    choicesHtml = `<div class="choice-grid">` + q.choices.map((c, idx) => `
+      <button class="choice" data-idx="${idx}">
+        <span class="choice-letter">${String.fromCharCode(65 + idx)}</span>
+        <span class="choice-en">${c.en}</span>
+        <span class="choice-zh">${c.zh}</span>
+      </button>
+    `).join('') + `</div>`;
+  }
+  
+  const pct = sess.total > 0 ? Math.round((sess.correct / sess.total) * 100) : 0;
+  
+  stage.innerHTML = `
+    <div class="quiz-progress">
+      <span>第 <strong>${sess.total + 1}</strong> 題 &nbsp;·&nbsp; <span class="exam-q-type-badge" style="margin-left:4px">${QTYPE_LABEL[q.qtype]}</span> &nbsp;·&nbsp; <span style="color:${famColor};font-weight:700">${familiarity}</span>${wrongInBank ? ' &nbsp;·&nbsp; <span style="color:var(--rose);font-weight:700">錯題庫</span>' : ''}</span>
+      <span><span class="score-pos">✓ ${sess.correct}</span> &nbsp; <span class="score-neg">✗ ${sess.wrong}</span> &nbsp; <span style="color:var(--ink-soft)">${pct}%</span></span>
+    </div>
+    ${promptHtml}
+    ${mainArea}
+    ${choicesHtml}
+    <div class="quiz-feedback" id="feedback"></div>
+  `;
+  container.appendChild(stage);
+  
+  const fb = document.getElementById('feedback');
+  
+  stage.querySelectorAll('[data-idx]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (sess.judged) return;
+      sess.judged = true;
+      const idx = parseInt(el.dataset.idx);
+      const isCorrect = q.choices[idx].id === q.correctId;
+      sess.total++;
+      if (isCorrect) sess.correct++; else sess.wrong++;
+      recordResult(q.item, isCorrect, q.qtype);
+      
+      // Mark choices
+      stage.querySelectorAll('[data-idx]').forEach((e, i) => {
+        if (q.choices[i].id === q.correctId) e.classList.add('correct');
+        else if (i === idx) e.classList.add('incorrect');
+      });
+      
+      // Show feedback with full details
+      const shortSec = SECTION_SHORT[q.item.section] || q.item.section;
+      fb.classList.add('show');
+      fb.innerHTML = `
+        <div class="qf-status ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '✓ 答對' : '✗ 再記一次'}</div>
+        <div class="qf-details">
+          <div><span class="field-label">EN</span><span class="qf-en">${q.item.en}</span></div>
+          <div><span class="field-label">中文</span><span class="qf-zh">${q.item.zh}</span></div>
+          <div style="margin-top:6px"><span class="field-label">A</span>${q.item.action}</div>
+          <div><span class="field-label">起</span>${q.item.origin}</div>
+          <div><span class="field-label">止</span>${q.item.insertion}</div>
+          <div style="margin-top:6px;color:var(--ink-soft);font-size:12px">${shortSec}</div>
+          ${q.item.note ? `<div class="qf-note"><span class="qf-note-label">校註</span>${q.item.note}</div>` : ''}
+        </div>
+        <div class="btn-row">
+          <button class="btn primary-cta" id="nextPracticeBtn">下一題 →</button>
+          ${wrongInBank ? `<button class="btn secondary" id="removeFromWrongBtn">已掌握,從錯題區移出</button>` : ''}
+        </div>
+      `;
+      document.getElementById('nextPracticeBtn').addEventListener('click', () => {
+        nextPracticeQuestion();
+        renderAll();
+      });
+      document.getElementById('nextPracticeBtn').focus();
+      const rmBtn = document.getElementById('removeFromWrongBtn');
+      if (rmBtn) {
+        rmBtn.addEventListener('click', () => {
+          removeFromWrongBank(q.item.id);
+          rmBtn.disabled = true;
+          rmBtn.textContent = '已移出';
+        });
+      }
+    });
+  });
+}
+
+// ====== Wrong Bank (錯題複習) ======
+function renderWrongBank(container) {
+  const wrongIds = Object.keys(wrongBank);
+  if (wrongIds.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-title">尚無錯題</div>
+        <div style="margin-top: 10px; line-height: 1.8">
+          完成「選擇複習」或「模擬考」時,答錯的肌肉會自動加入這裡<br>
+          <span style="color: var(--ink-soft); font-size: 13px">每題下方可選擇「已掌握,移出錯題區」</span>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Sort: by lastWrongAt descending, then by count descending
+  const entries = wrongIds.map(id => {
+    const item = ALL_ITEMS.find(it => it.id === id);
+    return item ? { item, bank: wrongBank[id] } : null;
+  }).filter(x => x);
+  entries.sort((a, b) => {
+    const dt = new Date(b.bank.lastWrongAt || 0) - new Date(a.bank.lastWrongAt || 0);
+    if (dt !== 0) return dt;
+    return b.bank.count - a.bank.count;
+  });
+  
+  let html = `
+    <div class="exam-intro" style="margin-bottom:22px;padding:24px;text-align:left">
+      <h2 style="font-size:30px;margin-bottom:4px">Wrong Bank</h2>
+      <div class="zh-sub" style="margin-bottom:12px">錯 題 複 習 區</div>
+      <p style="margin-bottom:14px">
+        累計 <strong style="color:var(--rose);font-size:18px">${entries.length}</strong> 條肌肉曾答錯;按上次答錯時間排序。<br>
+        點「練習」隨機抽題複習這條;點「已掌握」從錯題區移除。
+      </p>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn primary-cta" id="practiceAllWrongBtn">集中複習全部錯題 (${entries.length})</button>
+        <button class="btn secondary" id="clearAllWrongBtn">清空整個錯題區</button>
+      </div>
+    </div>
+    <div class="section-progress" style="margin-bottom:22px"><h3>錯題清單</h3>
+  `;
+  
+  entries.forEach(({ item, bank }) => {
+    const shortSec = SECTION_SHORT[item.section] || item.section;
+    const dt = new Date(bank.lastWrongAt);
+    const dtStr = `${dt.getMonth()+1}/${dt.getDate()} ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
+    const itemStats = stats.byItem[item.id];
+    const acc = itemStats ? Math.round((itemStats.correct / (itemStats.correct + itemStats.wrong)) * 100) : 0;
+    
+    html += `
+      <div class="review-item" data-wid="${item.id}">
+        <div class="rb-thumb"><img src="${item.img}" alt=""></div>
+        <div class="review-body">
+          <div class="rb-num">${shortSec} · 上次錯於 ${dtStr} · 累錯 ${bank.count} 次</div>
+          <div style="font-size:15px;line-height:1.4">
+            <em style="font-family:'Fraunces',serif;color:var(--tangerine-deep);font-weight:600">${item.en}</em>
+            <strong style="margin-left:8px;letter-spacing:1px">${item.zh}</strong>
+          </div>
+          <div style="font-size:13px;color:var(--ink);margin-top:4px;line-height:1.55">
+            <span class="field-label">A</span>${item.action}
+          </div>
+          <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;font-family:'JetBrains Mono',monospace">
+            整體 ${itemStats ? itemStats.correct + '/' + (itemStats.correct + itemStats.wrong) : '0/0'} (${acc}%)
+            ${bank.qtypes && bank.qtypes.length ? '&nbsp;·&nbsp; 錯過題型: ' + bank.qtypes.map(t => QTYPE_LABEL[t] || t).join(', ') : ''}
+          </div>
+          <div class="btn-row" style="margin-top:8px">
+            <button class="chip-action wb-practice" data-wid="${item.id}">練習此題 →</button>
+            <button class="chip-action wb-mastered" data-wid="${item.id}" style="color:var(--leaf-deep);text-decoration-color:var(--leaf-deep)">已掌握,移出</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  
+  container.innerHTML = html;
+  
+  document.getElementById('practiceAllWrongBtn').addEventListener('click', () => {
+    const wrongItems = entries.map(e => e.item);
+    if (wrongItems.length < 4) {
+      alert('錯題數量不足 4 題,無法生成選擇題(需要至少 4 個誘餌選項)。建議先到「選擇複習」或「模擬考」累積更多錯題。');
+      return;
+    }
+    // Start a practice session limited to these items
+    state.mode = 'practice';
+    saveState();
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === state.mode));
+    practiceSession = null;
+    // Override filtered items to wrongItems
+    // Hack: temporarily replace via state, but cleaner: just call startPracticeSession with wrongItems
+    startPracticeSession(wrongItems);
+    practiceSession.fromWrongBank = true;
+    renderAll();
+  });
+  
+  document.getElementById('clearAllWrongBtn').addEventListener('click', () => {
+    if (confirm(`確定清空全部 ${entries.length} 條錯題?此動作不可復原。`)) {
+      wrongBank = {};
+      saveWrongBank();
+      renderAll();
+    }
+  });
+  
+  container.querySelectorAll('.wb-mastered').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.wid;
+      removeFromWrongBank(id);
+      renderAll();
+    });
+  });
+  
+  container.querySelectorAll('.wb-practice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.wid;
+      const item = ALL_ITEMS.find(it => it.id === id);
+      if (!item) return;
+      // Need at least 4 items pool; use full ALL_ITEMS
+      state.mode = 'practice';
+      saveState();
+      document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === state.mode));
+      // Force a session that starts with this item
+      const ftItems = filteredItems();
+      startPracticeSession(ftItems);
+      practiceSession.itemsSig = ftItems.map(it => it.id).sort().join(',');
+      // Override current question to feature this specific item
+      const sectionItems = ALL_ITEMS.filter(x => x.section === item.section && x.id !== item.id);
+      const pool = sectionItems.length >= 3 ? sectionItems : ALL_ITEMS.filter(x => x.id !== item.id);
+      const distractors = shuffle(pool).slice(0, 3);
+      const choices = shuffle([item, ...distractors]);
+      const qtype = state.practiceConfig.qtypes[Math.floor(Math.random() * state.practiceConfig.qtypes.length)];
+      practiceSession.currentQuestion = { qtype, item, choices, correctId: item.id };
+      practiceSession.judged = false;
+      renderAll();
+    });
+  });
 }
 
 // ====== Stats ======
